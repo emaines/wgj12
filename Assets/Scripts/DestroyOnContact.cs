@@ -29,7 +29,7 @@ public class DestroyOnContact : MonoBehaviour {
 
 
         if (other.tag == "Fatal")
-            Destroy(gameObject, 1);
+            Destroy(other.gameObject, 1);
     }
 
 
