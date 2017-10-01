@@ -37,13 +37,20 @@ public class GameDirector : MonoBehaviour {
         {
 
             GameObject hazard = hazards[Random.Range(0, hazards.Length)];
+            //GameObject hazard = hazards[1];
+
             Vector3 spawnValuesTemp = spawnValues;
             if (hazard.name == "Pot Hole") spawnValuesTemp.z = -spawnValues.z;
 
-            Vector3 spawnPosition = new Vector3(Random.Range(-spawnValuesTemp.x, spawnValuesTemp.x), spawnValuesTemp.y, spawnValuesTemp.z);
+            spawnValuesTemp.y += hazard.transform.lossyScale.y / 2.0f;
 
+            //Debug.Log(spawnValuesTemp.y);
 
-            Instantiate(hazards[Random.Range(0, hazards.Length)], spawnPosition, Quaternion.identity);
+            Vector3 spawnPosition = new Vector3(Random.Range(-spawnValuesTemp.x, spawnValuesTemp.x), 
+                                                spawnValuesTemp.y, 
+                                                spawnValuesTemp.z);
+
+            Instantiate(hazard, spawnPosition, Quaternion.identity);
 
             yield return new WaitForSeconds(spawnWait);
         }
