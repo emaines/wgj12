@@ -18,7 +18,7 @@ public class DesttroyOutOfBoundary : MonoBehaviour {
     {
         if(other.tag != "Player")
         {
-            Destroy(other.gameObject, 1.0f);
+            Destroy(other.gameObject);
         }
         else // Player
         {

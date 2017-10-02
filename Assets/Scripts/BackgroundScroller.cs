@@ -23,6 +23,8 @@ public class BackgroundScroller : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         float newPosition = Mathf.Repeat(Time.time * -customPhysics.Speed(), tileSizeZ);
+        //Debug.Log("Time*speed" + Time.time * -customPhysics.Speed());
+        //Debug.Log(newPosition);
         transform.position = startPosition + Vector3.forward * newPosition;
     }
 }

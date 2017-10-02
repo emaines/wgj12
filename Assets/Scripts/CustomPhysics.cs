@@ -10,7 +10,7 @@ public class CustomPhysics : MonoBehaviour {
 
     public void BoostSpeed(float speed)
     {
-
+        playerSpeed += speed;
     }
 
     public float Speed()

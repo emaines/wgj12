@@ -35,10 +35,34 @@ public class GameDirector : MonoBehaviour {
 
     void FixedUpdate()
     {
-        distanceAccumulated += Time.deltaTime * customPhysics.Speed();
+        float cTODO_FIX_ME = 2.5f;
+        float currentSpeed = customPhysics.Speed();
+
+        distanceAccumulated += Time.deltaTime * currentSpeed;
         remainingDistanceText.text = "Distance Remaining: " + (distanceToGoal-distanceAccumulated);
-        speedText.text = "Speed: " + customPhysics.Speed();
+        speedText.text = "Speed: " + (currentSpeed - cTODO_FIX_ME);
+        if(distanceAccumulated >= distanceToGoal && !gameOver)
+        {
+            GameWon();
+        }
+        if (currentSpeed <= 0.01f && !gameOver)
+        {
+            OutOfSpeedGameOver();
+        }
     }
+
+    public void OutOfSpeedGameOver()
+    {
+        gameOver = true;
+        gameOverText.text = "SPUN OUT";
+    }
+
+    public void GameWon()
+    {
+        gameOver = true;
+        gameOverText.text = "YOU MADE IT!";
+    }
+
 
     public void GameOver()
     {
@@ -55,7 +79,7 @@ public class GameDirector : MonoBehaviour {
             GameObject hazard = hazards[Random.Range(0, hazards.Length)];
 
             Vector3 spawnValuesTemp = spawnValues;
-            if (hazard.name == "Pot Hole") spawnValuesTemp.z = -spawnValues.z;
+            if (hazard.name == "Pot Hole" || hazard.name == "Work Cone") spawnValuesTemp.z = -spawnValues.z;
 
             spawnValuesTemp.y += hazard.transform.lossyScale.y / 2.0f;
 
