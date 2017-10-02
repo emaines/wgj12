@@ -4,21 +4,47 @@ using UnityEngine;
 
 public class GameDirector : MonoBehaviour {
 
-    private int score;
-    private bool gameOver = false;
-    private bool restart = false;
-
-
+    public GUIText remainingDistanceText;
+    public GUIText gameOverText;
+    public GUIText speedText;
+    public float distanceToGoal;
     public GameObject[] hazards;
-
     public float startWait;
     public float spawnWait;
     public Vector3 spawnValues;
 
+    private int score;
+    private bool gameOver = false;
+    private bool restart = false;
+
+    private float distanceAccumulated;
+    private GameObject playerPhysics;
+    private CustomPhysics customPhysics;
+
+
     // Use this for initialization
     void Start () {
+        remainingDistanceText.text = "Distance Remaining: ";
+
+        playerPhysics = GameObject.Find("Player Physics");
+        if (playerPhysics)
+            customPhysics = playerPhysics.GetComponent<CustomPhysics>();
+
         StartCoroutine(SpawnHarzards());
 	}
+
+    void FixedUpdate()
+    {
+        distanceAccumulated += Time.deltaTime * customPhysics.Speed();
+        remainingDistanceText.text = "Distance Remaining: " + (distanceToGoal-distanceAccumulated);
+        speedText.text = "Speed: " + customPhysics.Speed();
+    }
+
+    public void GameOver()
+    {
+        gameOver = true;
+        gameOverText.text = "GAME OVER";
+    }
 
     IEnumerator SpawnHarzards()
     {
@@ -40,6 +66,9 @@ public class GameDirector : MonoBehaviour {
                                                 spawnValuesTemp.z);
 
             Instantiate(hazard, spawnPosition, Quaternion.identity);
+
+            if (gameOver)
+                break;
 
             yield return new WaitForSeconds(spawnWait);
         }
