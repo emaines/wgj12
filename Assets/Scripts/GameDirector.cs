@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class GameDirector : MonoBehaviour {
 
     public GUIText remainingDistanceText;
     public GUIText gameOverText;
     public GUIText speedText;
+    public GUIText restartMessage;
     public float distanceToGoal;
     public GameObject[] hazards;
     public float startWait;
@@ -15,7 +18,6 @@ public class GameDirector : MonoBehaviour {
 
     private int score;
     private bool gameOver = false;
-    private bool restart = false;
 
     private float distanceAccumulated;
     private GameObject playerPhysics;
@@ -25,6 +27,10 @@ public class GameDirector : MonoBehaviour {
     // Use this for initialization
     void Start () {
         remainingDistanceText.text = "Distance Remaining: ";
+        speedText.text = "Speed:";
+        gameOverText.text = "";
+        restartMessage.text = "";
+
 
         playerPhysics = GameObject.Find("Player Physics");
         if (playerPhysics)
@@ -32,6 +38,17 @@ public class GameDirector : MonoBehaviour {
 
         StartCoroutine(SpawnHarzards());
 	}
+
+    void Update()
+    {
+        if (gameOver)
+        {
+            if (Input.GetButton("Fire1"))
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+        }
+    }
 
     void FixedUpdate()
     {
@@ -68,6 +85,7 @@ public class GameDirector : MonoBehaviour {
     {
         gameOver = true;
         gameOverText.text = "GAME OVER";
+        restartMessage.text = "Press fire to restart";
     }
 
     IEnumerator SpawnHarzards()

@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour {
 
     public float speed;
     public float stability = 0.3f;
+    public float tilt = 0.1f;
     Rigidbody rb;
 
 	// Use this for initialization
@@ -33,6 +34,6 @@ public class PlayerController : MonoBehaviour {
         Vector3 torqueVectorUp = Vector3.Cross(predictedUp, Vector3.up);
         rb.AddTorque(torqueVectorUp * speed * speed);
 
-
+        //rb.rotation = Quaternion.Euler(0.0f, 90.0f, (rb.velocity.x * -tilt) + 0.0f);
     }
 }
