@@ -11,6 +11,7 @@ public class BackgroundScroller : MonoBehaviour {
 
     private GameObject playerPhysics;
     private CustomPhysics customPhysics;
+    private float newPosition;
 
     // Use this for initialization
     void Start () {
@@ -22,9 +23,19 @@ public class BackgroundScroller : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        float newPosition = Mathf.Repeat(Time.time * -customPhysics.Speed(), tileSizeZ);
-        //Debug.Log("Time*speed" + Time.time * -customPhysics.Speed());
+        //float newPosition = Mathf.Repeat(Time.deltaTime * customPhysics.Speed(), tileSizeZ);
+        newPosition = newPosition + customPhysics.Speed() * Time.deltaTime;
+        newPosition = Mathf.Repeat(newPosition, tileSizeZ);
+
+        //Debug.Log("Time*speed" + Time.time * customPhysics.Speed());
         //Debug.Log(newPosition);
-        transform.position = startPosition + Vector3.forward * newPosition;
+        //Debug.Log(Time.time);
+        transform.position = startPosition - Vector3.forward * newPosition;
+
+
+
+
+
+
     }
 }

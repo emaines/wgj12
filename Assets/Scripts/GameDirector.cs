@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameDirector : MonoBehaviour {
 
+    public bool debugBoost = true;
     public GUIText remainingDistanceText;
     public GUIText gameOverText;
     public GUIText speedText;
@@ -52,12 +53,11 @@ public class GameDirector : MonoBehaviour {
 
     void FixedUpdate()
     {
-        float cTODO_FIX_ME = 2.5f;
         float currentSpeed = customPhysics.Speed();
 
         distanceAccumulated += Time.deltaTime * currentSpeed;
         remainingDistanceText.text = "Distance Remaining: " + (distanceToGoal-distanceAccumulated);
-        speedText.text = "Speed: " + (currentSpeed - cTODO_FIX_ME);
+        speedText.text = "Speed: " + currentSpeed;
         if(distanceAccumulated >= distanceToGoal && !gameOver)
         {
             GameWon();
@@ -93,8 +93,15 @@ public class GameDirector : MonoBehaviour {
         yield return new WaitForSeconds(startWait);
         while (true)
         {
-
-            GameObject hazard = hazards[Random.Range(0, hazards.Length)];
+            GameObject hazard;
+            if (!debugBoost)
+            {
+                hazard = hazards[Random.Range(0, hazards.Length)];
+            }
+            else
+            {
+                hazard = hazards[0];
+            }
 
             Vector3 spawnValuesTemp = spawnValues;
             if (hazard.name == "Pot Hole" || hazard.name == "Work Cone") spawnValuesTemp.z = -spawnValues.z;
