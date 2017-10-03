@@ -24,9 +24,9 @@ public class SpeedBoostOnContact : MonoBehaviour {
         if(other.tag == "Boost")
         {
             customPhysics.BoostSpeed(speedBoost);
-            Vector3 toCenterVector = Vector3.zero - playerRigidBody.transform.position;
+            //Vector3 toCenterVector = Vector3.zero - playerRigidBody.transform.position;
             //playerRigidBody.AddForce(new Vector3(toCenterVector.x, jumpImpulse, toCenterVector.z), ForceMode.Impulse);
-            playerRigidBody.AddForce(new Vector3(0.0f, jumpImpulse, 0.0f), ForceMode.Impulse);
+            playerRigidBody.AddForce(new Vector3(0.0f, jumpImpulse, 0.0f), ForceMode.Acceleration);
 
         }
     }
