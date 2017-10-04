@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameDirector : MonoBehaviour {
 
     public bool debugBoost = true;
+    public int debugSpawnIndex = 0;
     public GUIText remainingDistanceText;
     public GUIText gameOverText;
     public GUIText speedText;
@@ -100,13 +101,14 @@ public class GameDirector : MonoBehaviour {
             }
             else
             {
-                hazard = hazards[0];
+                hazard = hazards[debugSpawnIndex];
             }
 
             Vector3 spawnValuesTemp = spawnValues;
             if (hazard.name == "Pot Hole" || hazard.name == "Work Cone") spawnValuesTemp.z = -spawnValues.z;
 
-            spawnValuesTemp.y += hazard.transform.lossyScale.y / 2.0f;
+            if(hazard.name != "Work Cone")
+                spawnValuesTemp.y += hazard.transform.lossyScale.y / 2.0f;
 
             //Debug.Log(spawnValuesTemp.y);
 
