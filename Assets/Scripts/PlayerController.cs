@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour {
 
     private GameObject playerPhysics;
     private CustomPhysics customPhysics;
+    private AudioSource bumpSound;
 
     // Use this for initialization
     void Start () {
@@ -18,12 +19,21 @@ public class PlayerController : MonoBehaviour {
         playerPhysics = GameObject.Find("Player Physics");
         if (playerPhysics)
             customPhysics = playerPhysics.GetComponent<CustomPhysics>();
+        bumpSound = GetComponent<AudioSource>();
     }
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
+
+    //void OnCollisionEnter(Collision obj)
+    //{
+    //    //Debug.Log(obj.relativeVelocity.magnitude);
+    //    if(!bumpSound.isPlaying && obj.relativeVelocity.magnitude > 0.5f) { 
+    //        bumpSound.volume = obj.relativeVelocity.magnitude / 20.0f;
+    //    }
+    //}
 
 
     void FixedUpdate()
