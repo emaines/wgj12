@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class DesttroyOutOfBoundary : MonoBehaviour {
 
-    private GameObject gameObject;
+    private GameObject directorGameObject;
     private GameDirector gameDirector;
 
     void Start()
     {
-        gameObject = GameObject.Find("Game Manager");
-        if (gameObject)
-            gameDirector = gameObject.GetComponent<GameDirector>();
+        directorGameObject = GameObject.Find("Game Manager");
+        if (directorGameObject)
+            gameDirector = directorGameObject.GetComponent<GameDirector>();
     }
 
     void OnTriggerExit(Collider other)

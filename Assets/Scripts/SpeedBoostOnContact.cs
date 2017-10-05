@@ -11,6 +11,9 @@ public class SpeedBoostOnContact : MonoBehaviour {
     private GameObject playerPhysicsGO;
     private CustomPhysics customPhysics;
 
+    private GameObject gameDirectorObject;
+    private GameDirector gameDirector;
+
     void Start()
     {
         playerPhysicsGO = GameObject.Find("Player Physics");
@@ -18,6 +21,10 @@ public class SpeedBoostOnContact : MonoBehaviour {
             customPhysics = playerPhysicsGO.GetComponent<CustomPhysics>();
             playerRigidBody = playerPhysicsGO.GetComponentInParent<Rigidbody>();
         }
+
+        gameDirectorObject = GameObject.Find("Game Manager");
+        if (gameDirectorObject)
+            gameDirector = gameDirectorObject.GetComponent<GameDirector>();
     }
 
     void OnTriggerEnter(Collider other)
@@ -25,14 +32,18 @@ public class SpeedBoostOnContact : MonoBehaviour {
         if(other.tag == "Boost")
         {
             customPhysics.BoostSpeed(speedBoost);
-            //Vector3 toCenterVector = Vector3.zero - playerRigidBody.transform.position;
-            //playerRigidBody.AddForce(new Vector3(toCenterVector.x, jumpImpulse, toCenterVector.z), ForceMode.Impulse);
             playerRigidBody.AddForce(new Vector3(0.0f, jumpImpulse, 0.0f), ForceMode.Acceleration);
-
+            gameDirector.AddPoints(10);
         }
         if (other.tag == "SlowDown")
         {
             customPhysics.BoostSpeed(-speedSlow);
+            gameDirector.AddPoints(-5);
+        }
+        if (other.tag == "Fatal")
+        {
+            customPhysics.BoostSpeed(-speedSlow);
+            gameDirector.AddPoints(50);
         }
     }
 }

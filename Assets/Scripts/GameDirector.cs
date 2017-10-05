@@ -12,6 +12,7 @@ public class GameDirector : MonoBehaviour {
     public GUIText gameOverText;
     public GUIText speedText;
     public GUIText restartMessage;
+    public GUIText scoreText;
     public float distanceToGoal;
     public GameObject[] hazards;
     public float startWait;
@@ -36,11 +37,14 @@ public class GameDirector : MonoBehaviour {
         speedText.text = "Speed:";
         gameOverText.text = "";
         restartMessage.text = "";
+        scoreText.text = "";
 
 
         playerPhysics = GameObject.Find("Player Physics");
         if (playerPhysics)
             customPhysics = playerPhysics.GetComponent<CustomPhysics>();
+        else
+            Debug.LogError(playerPhysics + "Not found");
 
         gameMusic = GetComponents<AudioSource>();
         startingMusic = gameMusic[0];
@@ -77,6 +81,12 @@ public class GameDirector : MonoBehaviour {
         {
             OutOfSpeedGameOver();
         }
+        scoreText.text = score.ToString();
+    }
+
+    public void AddPoints(int points)
+    {
+        score += points;
     }
 
     public void OutOfSpeedGameOver()
@@ -97,11 +107,13 @@ public class GameDirector : MonoBehaviour {
 
     public void GameOver()
     {
-        gameOver = true;
-        gameOverText.text = "GAME OVER";
-        restartMessage.text = "Press fire to restart";
-        startingMusic.Stop();
-        retryMusic.Play();
+        if (!gameOver) { 
+            gameOver = true;
+            gameOverText.text = "GAME OVER";
+            restartMessage.text = "Press fire to restart";
+            startingMusic.Stop();
+            retryMusic.Play();
+        }
     }
 
     IEnumerator SpawnHarzards()
