@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpeedBoostOnContact : MonoBehaviour {
 
     public float speedBoost = 1.0f;
+    public float speedSlow = 1.0f;
     public float jumpImpulse = 1000.0f;
     private Rigidbody playerRigidBody;
     private GameObject playerPhysicsGO;
@@ -28,6 +29,10 @@ public class SpeedBoostOnContact : MonoBehaviour {
             //playerRigidBody.AddForce(new Vector3(toCenterVector.x, jumpImpulse, toCenterVector.z), ForceMode.Impulse);
             playerRigidBody.AddForce(new Vector3(0.0f, jumpImpulse, 0.0f), ForceMode.Acceleration);
 
+        }
+        if (other.tag == "SlowDown")
+        {
+            customPhysics.BoostSpeed(-speedSlow);
         }
     }
 }

@@ -18,6 +18,10 @@ public class GameDirector : MonoBehaviour {
     public float spawnWait;
     public Vector3 spawnValues;
 
+    public AudioSource[] gameMusic;
+    public AudioSource startingMusic;
+    public AudioSource retryMusic;
+
     private int score;
     private bool gameOver = false;
 
@@ -38,6 +42,12 @@ public class GameDirector : MonoBehaviour {
         if (playerPhysics)
             customPhysics = playerPhysics.GetComponent<CustomPhysics>();
 
+        gameMusic = GetComponents<AudioSource>();
+        startingMusic = gameMusic[0];
+        retryMusic= gameMusic[1];
+
+        startingMusic.Play();
+
         StartCoroutine(SpawnHarzards());
 	}
 
@@ -57,8 +67,8 @@ public class GameDirector : MonoBehaviour {
         float currentSpeed = customPhysics.Speed();
 
         distanceAccumulated += Time.deltaTime * currentSpeed;
-        remainingDistanceText.text = "Distance Remaining: " + (distanceToGoal-distanceAccumulated);
-        speedText.text = "Speed: " + currentSpeed;
+        remainingDistanceText.text = "Distance Remaining: " + (int) (distanceToGoal-distanceAccumulated);
+        speedText.text = "Speed: " + (int) currentSpeed;
         if(distanceAccumulated >= distanceToGoal && !gameOver)
         {
             GameWon();
@@ -73,6 +83,9 @@ public class GameDirector : MonoBehaviour {
     {
         gameOver = true;
         gameOverText.text = "SPUN OUT";
+        restartMessage.text = "Press fire to restart";
+        startingMusic.Stop();
+        retryMusic.Play();
     }
 
     public void GameWon()
@@ -87,6 +100,8 @@ public class GameDirector : MonoBehaviour {
         gameOver = true;
         gameOverText.text = "GAME OVER";
         restartMessage.text = "Press fire to restart";
+        startingMusic.Stop();
+        retryMusic.Play();
     }
 
     IEnumerator SpawnHarzards()

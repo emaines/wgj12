@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class GrassFriction : MonoBehaviour {
 
-    private bool enteredFrictionZone = false;
-
     private GameObject playerPhysics;
     private CustomPhysics customPhysics;
 
