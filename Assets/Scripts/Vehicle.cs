@@ -11,11 +11,6 @@ public class Vehicle : MonoBehaviour {
 	void Start () {
         rb = GetComponent<Rigidbody>();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     void FixedUpdate()
     {
